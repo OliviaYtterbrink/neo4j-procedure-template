@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.neo4j.driver.v1.*;
-import org.neo4j.harness.ServerControls;
-import org.neo4j.harness.TestServerBuilders;
+import org.neo4j.harness.Neo4jBuilders;
+import org.neo4j.harness.Neo4j;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.neo4j.driver.v1.Values.parameters;
@@ -14,15 +14,15 @@ import static org.neo4j.driver.v1.Values.parameters;
 public class LegacyFullTextIndexTest {
 
     private static final Config driverConfig = Config.build().withoutEncryption().toConfig();
-    private ServerControls embeddedDatabaseServer;
+    private Neo4j embeddedDatabaseServer;
 
     @BeforeAll
     void initializeNeo4j() {
 
-        this.embeddedDatabaseServer = TestServerBuilders
+        this.embeddedDatabaseServer = Neo4jBuilders
                 .newInProcessBuilder()
                 .withProcedure(FullTextIndex.class)
-                .newServer();
+                .build();
     }
 
     @Test
